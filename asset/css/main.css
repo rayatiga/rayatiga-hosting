@@ -1,0 +1,67 @@
+/* Google fonts */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap');
+
+/* Custom css sendiri */
+* {
+    font-family: 'Poppins', sans-serif;
+    font-weight: normal;
+}
+
+body {
+    overflow: overlay;
+}
+
+::-webkit-scrollbar {
+    width: 17px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: rgba(70, 70, 70, 0.25);
+    border-radius: 9999px;
+    border: 3px solid rgba(0, 0, 0, 0);
+    background-clip: padding-box;
+}
+
+::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0);
+}
+
+.navbar-brand,
+.card-title,
+u {
+    font-weight: bold;
+}
+
+button,
+a {
+    cursor: pointer;
+}
+
+/* Untuk offset anchor */
+/* Scroll anchor correctly with fixed navbar (creating an offset) */
+/* Add a <span class="anchor" id="SECTION"></span> above section */
+span.anchor {
+    margin-top: -4.5rem; /* height of nav */
+    display: block;
+    height: 4.5rem; /* height of nav */
+    visibility: hidden;
+    position: relative;
+}
+
+/* Above normal offset */
+span.anchor-3 {
+    margin-top: -7.5rem;
+    display: block;
+    height: 7.5rem;
+    visibility: hidden;
+    position: relative;
+}
+
+/* Menambah pading atas pada hero/judul halaman karena fixed navbar */
+.heroIndex {
+    padding-top: 2rem;
+}
+
+.heroBody {
+    padding-top: 3.5rem;
+}

@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+Disallow: /buy
+Disallow: /chat
+Disallow /404.html
+
+Sitemap: https://hosting.rayatiga.com/sitemap.xml
