@@ -61,6 +61,6 @@ span.anchor-3 {
 }
 
 .shadow-breathing {
-    -webkit-animation: shadow-drop-center 0.75s ease-in-out infinite alternate both;
-    animation: shadow-drop-center 0.75s ease-in-out infinite alternate both;
+    -webkit-animation: shadow-drop-center 0.5s ease-in-out infinite alternate both;
+    animation: shadow-drop-center 0.5s ease-in-out infinite alternate both;
 }
