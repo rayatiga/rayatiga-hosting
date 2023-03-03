@@ -11,18 +11,15 @@
         : ((global = typeof globalThis !== 'undefined' ? globalThis : global || self), (global.bootstrap = factory()))
 })(this, function () {
     'use strict'
-
     /**
      * --------------------------------------------------------------------------
      * Bootstrap (v5.3.0-alpha1): util/index.js
      * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
      * --------------------------------------------------------------------------
      */
-
     const MAX_UID = 1000000
     const MILLISECONDS_MULTIPLIER = 1000
     const TRANSITION_END = 'transitionend'
-
     /**
      * Properly escape IDs selectors to handle weird IDs
      * @param {string} selector
@@ -35,7 +32,6 @@
         }
         return selector
     }
-
     // Shout-out Angus Croll (https://goo.gl/pxwQGp)
     const toType = (object) => {
         if (object === null || object === undefined) {
@@ -46,11 +42,9 @@
             .match(/\s([a-z]+)/i)[1]
             .toLowerCase()
     }
-
     /**
      * Public Util API
      */
-
     const getUID = (prefix) => {
         do {
             prefix += Math.floor(Math.random() * MAX_UID)
@@ -61,17 +55,14 @@
         if (!element) {
             return 0
         }
-
         // Get transition-duration of the element
         let { transitionDuration, transitionDelay } = window.getComputedStyle(element)
         const floatTransitionDuration = Number.parseFloat(transitionDuration)
         const floatTransitionDelay = Number.parseFloat(transitionDelay)
-
         // Return 0 if element or transition duration is not found
         if (!floatTransitionDuration && !floatTransitionDelay) {
             return 0
         }
-
         // If multiple durations are defined, take the first
         transitionDuration = transitionDuration.split(',')[0]
         transitionDelay = transitionDelay.split(',')[0]
@@ -136,7 +127,6 @@
         if (!document.documentElement.attachShadow) {
             return null
         }
-
         // Can find the shadow root otherwise it'll return the document
         if (typeof element.getRootNode === 'function') {
             const root = element.getRootNode()
@@ -145,7 +135,6 @@
         if (element instanceof ShadowRoot) {
             return element
         }
-
         // when we don't find a shadow root
         if (!element.parentNode) {
             return null
@@ -153,7 +142,6 @@
         return findShadowRoot(element.parentNode)
     }
     const noop = () => {}
-
     /**
      * Trick to restart an element's animation
      *
@@ -165,7 +153,6 @@
     const reflow = (element) => {
         element.offsetHeight // eslint-disable-line no-unused-expressions
     }
-
     const getjQuery = () => {
         if (window.jQuery && !document.body.hasAttribute('data-bs-no-jquery')) {
             return window.jQuery
@@ -231,7 +218,6 @@
             }
         }, emulatedDuration)
     }
-
     /**
      * Return the previous/next element of a list.
      *
@@ -244,7 +230,6 @@
     const getNextActiveElement = (list, activeElement, shouldGetNext, isCycleAllowed) => {
         const listLength = list.length
         let index = list.indexOf(activeElement)
-
         // if the element does not exist in the list return an element
         // depending on the direction and if cycle is allowed
         if (index === -1) {
@@ -256,18 +241,15 @@
         }
         return list[Math.max(0, Math.min(index, listLength - 1))]
     }
-
     /**
      * --------------------------------------------------------------------------
      * Bootstrap (v5.3.0-alpha1): dom/event-handler.js
      * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
      * --------------------------------------------------------------------------
      */
-
     /**
      * Constants
      */
-
     const namespaceRegex = /[^.]*(?=\..*)\.|.*/
     const stripNameRegex = /\..*/
     const stripUidRegex = /::\d+$/
@@ -325,11 +307,9 @@
         'abort',
         'scroll',
     ])
-
     /**
      * Private methods
      */
-
     function makeEventUid(element, uid) {
         return (uid && `${uid}::${uidEvent++}`) || element.uidEvent || uidEvent++
     }
@@ -389,7 +369,6 @@
             return
         }
         let [isDelegated, callable, typeEvent] = normalizeParameters(originalTypeEvent, handler, delegationFunction)
-
         // in case of mouseenter or mouseleave wrap the handler within a function that checks for its DOM position
         // this prevents the handler from being dispatched the same way as mouseover or mouseout does
         if (originalTypeEvent in customEvents) {
@@ -535,18 +514,15 @@
         }
         return obj
     }
-
     /**
      * --------------------------------------------------------------------------
      * Bootstrap (v5.3.0-alpha1): dom/data.js
      * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
      * --------------------------------------------------------------------------
      */
-
     /**
      * Constants
      */
-
     const elementMap = new Map()
     const Data = {
         set(element, key, instance) {
@@ -554,7 +530,6 @@
                 elementMap.set(element, new Map())
             }
             const instanceMap = elementMap.get(element)
-
             // make it clear we only want one instance per element
             // can be removed later when multiple key/instances are fine to be used
             if (!instanceMap.has(key) && instanceMap.size !== 0) {
@@ -580,21 +555,18 @@
             }
             const instanceMap = elementMap.get(element)
             instanceMap.delete(key)
-
             // free up element references if there are no instances left for an element
             if (instanceMap.size === 0) {
                 elementMap.delete(element)
             }
         },
     }
-
     /**
      * --------------------------------------------------------------------------
      * Bootstrap (v5.3.0-alpha1): dom/manipulator.js
      * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
      * --------------------------------------------------------------------------
      */
-
     function normalizeData(value) {
         if (value === 'true') {
             return true
@@ -646,18 +618,15 @@
             return normalizeData(element.getAttribute(`data-bs-${normalizeDataKey(key)}`))
         },
     }
-
     /**
      * --------------------------------------------------------------------------
      * Bootstrap (v5.3.0-alpha1): util/config.js
      * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
      * --------------------------------------------------------------------------
      */
-
     /**
      * Class definition
      */
-
     class Config {
         // Getters
         static get Default() {
@@ -680,7 +649,6 @@
         }
         _mergeConfigObj(config, element) {
             const jsonConfig = isElement$1(element) ? Manipulator.getDataAttribute(element, 'config') : {} // try to parse
-
             return {
                 ...this.constructor.Default,
                 ...(typeof jsonConfig === 'object' ? jsonConfig : {}),
@@ -700,24 +668,19 @@
             }
         }
     }
-
     /**
      * --------------------------------------------------------------------------
      * Bootstrap (v5.3.0-alpha1): base-component.js
      * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
      * --------------------------------------------------------------------------
      */
-
     /**
      * Constants
      */
-
     const VERSION = '5.3.0-alpha1'
-
     /**
      * Class definition
      */
-
     class BaseComponent extends Config {
         constructor(element, config) {
             super()
@@ -729,7 +692,6 @@
             this._config = this._getConfig(config)
             Data.set(this._element, this.constructor.DATA_KEY, this)
         }
-
         // Public
         dispose() {
             Data.remove(this._element, this.constructor.DATA_KEY)
@@ -747,7 +709,6 @@
             this._typeCheckConfig(config)
             return config
         }
-
         // Static
         static getInstance(element) {
             return Data.get(getElement(element), this.DATA_KEY)
@@ -768,7 +729,6 @@
             return `${name}${this.EVENT_KEY}`
         }
     }
-
     /**
      * --------------------------------------------------------------------------
      * Bootstrap (v5.3.0-alpha1): dom/selector-engine.js
@@ -779,7 +739,6 @@
         let selector = element.getAttribute('data-bs-target')
         if (!selector || selector === '#') {
             let hrefAttribute = element.getAttribute('href')
-
             // The only valid content that could double as a selector are IDs or classes,
             // so everything starting with `#` or `.`. If a "real" URL is used as the selector,
             // `document.querySelector` will rightfully complain it is invalid.
@@ -787,7 +746,6 @@
             if (!hrefAttribute || (!hrefAttribute.includes('#') && !hrefAttribute.startsWith('.'))) {
                 return null
             }
-
             // Just in case some CMS puts out a full URL with the anchor appended
             if (hrefAttribute.includes('#') && !hrefAttribute.startsWith('#')) {
                 hrefAttribute = `#${hrefAttribute.split('#')[1]}`
@@ -867,7 +825,6 @@
             return selector ? SelectorEngine.find(selector) : []
         },
     }
-
     /**
      * --------------------------------------------------------------------------
      * Bootstrap (v5.3.0-alpha1): util/component-functions.js
@@ -886,23 +843,19 @@
             }
             const target = SelectorEngine.getElementFromSelector(this) || this.closest(`.${name}`)
             const instance = component.getOrCreateInstance(target)
-
             // Method argument is left, for Alert and only, as it doesn't implement the 'hide' method
             instance[method]()
         })
     }
-
     /**
      * --------------------------------------------------------------------------
      * Bootstrap (v5.3.0-alpha1): alert.js
      * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
      * --------------------------------------------------------------------------
      */
-
     /**
      * Constants
      */
-
     const NAME$f = 'alert'
     const DATA_KEY$a = 'bs.alert'
     const EVENT_KEY$b = `.${DATA_KEY$a}`
@@ -910,17 +863,14 @@
     const EVENT_CLOSED = `closed${EVENT_KEY$b}`
     const CLASS_NAME_FADE$5 = 'fade'
     const CLASS_NAME_SHOW$8 = 'show'
-
     /**
      * Class definition
      */
-
     class Alert extends BaseComponent {
         // Getters
         static get NAME() {
             return NAME$f
         }
-
         // Public
         close() {
             const closeEvent = EventHandler.trigger(this._element, EVENT_CLOSE)
@@ -931,14 +881,12 @@
             const isAnimated = this._element.classList.contains(CLASS_NAME_FADE$5)
             this._queueCallback(() => this._destroyElement(), this._element, isAnimated)
         }
-
         // Private
         _destroyElement() {
             this._element.remove()
             EventHandler.trigger(this._element, EVENT_CLOSED)
             this.dispose()
         }
-
         // Static
         static jQueryInterface(config) {
             return this.each(function () {
@@ -953,30 +901,23 @@
             })
         }
     }
-
     /**
      * Data API implementation
      */
-
     enableDismissTrigger(Alert, 'close')
-
     /**
      * jQuery
      */
-
     defineJQueryPlugin(Alert)
-
     /**
      * --------------------------------------------------------------------------
      * Bootstrap (v5.3.0-alpha1): button.js
      * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
      * --------------------------------------------------------------------------
      */
-
     /**
      * Constants
      */
-
     const NAME$e = 'button'
     const DATA_KEY$9 = 'bs.button'
     const EVENT_KEY$a = `.${DATA_KEY$9}`
@@ -984,23 +925,19 @@
     const CLASS_NAME_ACTIVE$3 = 'active'
     const SELECTOR_DATA_TOGGLE$5 = '[data-bs-toggle="button"]'
     const EVENT_CLICK_DATA_API$6 = `click${EVENT_KEY$a}${DATA_API_KEY$6}`
-
     /**
      * Class definition
      */
-
     class Button extends BaseComponent {
         // Getters
         static get NAME() {
             return NAME$e
         }
-
         // Public
         toggle() {
             // Toggle class and sync the `aria-pressed` attribute with the return value of the `.toggle()` method
             this._element.setAttribute('aria-pressed', this._element.classList.toggle(CLASS_NAME_ACTIVE$3))
         }
-
         // Static
         static jQueryInterface(config) {
             return this.each(function () {
@@ -1011,35 +948,28 @@
             })
         }
     }
-
     /**
      * Data API implementation
      */
-
     EventHandler.on(document, EVENT_CLICK_DATA_API$6, SELECTOR_DATA_TOGGLE$5, (event) => {
         event.preventDefault()
         const button = event.target.closest(SELECTOR_DATA_TOGGLE$5)
         const data = Button.getOrCreateInstance(button)
         data.toggle()
     })
-
     /**
      * jQuery
      */
-
     defineJQueryPlugin(Button)
-
     /**
      * --------------------------------------------------------------------------
      * Bootstrap (v5.3.0-alpha1): util/swipe.js
      * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
      * --------------------------------------------------------------------------
      */
-
     /**
      * Constants
      */
-
     const NAME$d = 'swipe'
     const EVENT_KEY$9 = '.bs.swipe'
     const EVENT_TOUCHSTART = `touchstart${EVENT_KEY$9}`
@@ -1061,11 +991,9 @@
         leftCallback: '(function|null)',
         rightCallback: '(function|null)',
     }
-
     /**
      * Class definition
      */
-
     class Swipe extends Config {
         constructor(element, config) {
             super()
@@ -1078,7 +1006,6 @@
             this._supportPointerEvents = Boolean(window.PointerEvent)
             this._initEvents()
         }
-
         // Getters
         static get Default() {
             return Default$c
@@ -1089,12 +1016,10 @@
         static get NAME() {
             return NAME$d
         }
-
         // Public
         dispose() {
             EventHandler.off(this._element, EVENT_KEY$9)
         }
-
         // Private
         _start(event) {
             if (!this._supportPointerEvents) {
@@ -1144,24 +1069,20 @@
                 (event.pointerType === POINTER_TYPE_PEN || event.pointerType === POINTER_TYPE_TOUCH)
             )
         }
-
         // Static
         static isSupported() {
             return 'ontouchstart' in document.documentElement || navigator.maxTouchPoints > 0
         }
     }
-
     /**
      * --------------------------------------------------------------------------
      * Bootstrap (v5.3.0-alpha1): carousel.js
      * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
      * --------------------------------------------------------------------------
      */
-
     /**
      * Constants
      */
-
     const NAME$c = 'carousel'
     const DATA_KEY$8 = 'bs.carousel'
     const EVENT_KEY$8 = `.${DATA_KEY$8}`
@@ -1169,7 +1090,6 @@
     const ARROW_LEFT_KEY$1 = 'ArrowLeft'
     const ARROW_RIGHT_KEY$1 = 'ArrowRight'
     const TOUCHEVENT_COMPAT_WAIT = 500 // Time for mouse compat events to fire after touch
-
     const ORDER_NEXT = 'next'
     const ORDER_PREV = 'prev'
     const DIRECTION_LEFT = 'left'
@@ -1217,11 +1137,9 @@
         touch: 'boolean',
         wrap: 'boolean',
     }
-
     /**
      * Class definition
      */
-
     class Carousel extends BaseComponent {
         constructor(element, config) {
             super(element, config)
@@ -1236,7 +1154,6 @@
                 this.cycle()
             }
         }
-
         // Getters
         static get Default() {
             return Default$b
@@ -1247,7 +1164,6 @@
         static get NAME() {
             return NAME$c
         }
-
         // Public
         next() {
             this._slide(ORDER_NEXT)
@@ -1306,7 +1222,6 @@
             }
             super.dispose()
         }
-
         // Private
         _configAfterMerge(config) {
             config.defaultInterval = config.interval
@@ -1332,7 +1247,6 @@
                 if (this._config.pause !== 'hover') {
                     return
                 }
-
                 // If it's a touch-enabled device, mouseenter/leave are fired as
                 // part of the mouse compatibility events on first tap - the carousel
                 // would stop cycling until user tapped out of it;
@@ -1340,7 +1254,6 @@
                 // (as if it's the second time we tap on it, mouseenter compat event
                 // is NOT fired) and after a timeout (to allow for mouse compatibility
                 // events to fire) we explicitly restart cycling
-
                 this.pause()
                 if (this.touchTimeout) {
                     clearTimeout(this.touchTimeout)
@@ -1470,7 +1383,6 @@
             }
             return order === ORDER_PREV ? DIRECTION_RIGHT : DIRECTION_LEFT
         }
-
         // Static
         static jQueryInterface(config) {
             return this.each(function () {
@@ -1488,11 +1400,9 @@
             })
         }
     }
-
     /**
      * Data API implementation
      */
-
     EventHandler.on(document, EVENT_CLICK_DATA_API$5, SELECTOR_DATA_SLIDE, function (event) {
         const target = SelectorEngine.getElementFromSelector(this)
         if (!target || !target.classList.contains(CLASS_NAME_CAROUSEL)) {
@@ -1520,24 +1430,19 @@
             Carousel.getOrCreateInstance(carousel)
         }
     })
-
     /**
      * jQuery
      */
-
     defineJQueryPlugin(Carousel)
-
     /**
      * --------------------------------------------------------------------------
      * Bootstrap (v5.3.0-alpha1): collapse.js
      * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
      * --------------------------------------------------------------------------
      */
-
     /**
      * Constants
      */
-
     const NAME$b = 'collapse'
     const DATA_KEY$7 = 'bs.collapse'
     const EVENT_KEY$7 = `.${DATA_KEY$7}`
@@ -1565,11 +1470,9 @@
         parent: '(null|element)',
         toggle: 'boolean',
     }
-
     /**
      * Class definition
      */
-
     class Collapse extends BaseComponent {
         constructor(element, config) {
             super(element, config)
@@ -1593,7 +1496,6 @@
                 this.toggle()
             }
         }
-
         // Getters
         static get Default() {
             return Default$a
@@ -1604,7 +1506,6 @@
         static get NAME() {
             return NAME$b
         }
-
         // Public
         toggle() {
             if (this._isShown()) {
@@ -1618,7 +1519,6 @@
                 return
             }
             let activeChildren = []
-
             // find active children
             if (this._config.parent) {
                 activeChildren = this._getFirstLevelChildren(SELECTOR_ACTIVES)
@@ -1689,7 +1589,6 @@
         _isShown(element = this._element) {
             return element.classList.contains(CLASS_NAME_SHOW$7)
         }
-
         // Private
         _configAfterMerge(config) {
             config.toggle = Boolean(config.toggle) // Coerce string values
@@ -1725,7 +1624,6 @@
                 element.setAttribute('aria-expanded', isOpen)
             }
         }
-
         // Static
         static jQueryInterface(config) {
             const _config = {}
@@ -1743,11 +1641,9 @@
             })
         }
     }
-
     /**
      * Data API implementation
      */
-
     EventHandler.on(document, EVENT_CLICK_DATA_API$4, SELECTOR_DATA_TOGGLE$4, function (event) {
         // preventDefault only for <a> elements (which change the URL) not inside the collapsible element
         if (event.target.tagName === 'A' || (event.delegateTarget && event.delegateTarget.tagName === 'A')) {
@@ -1759,13 +1655,10 @@
             }).toggle()
         }
     })
-
     /**
      * jQuery
      */
-
     defineJQueryPlugin(Collapse)
-
     var top = 'top'
     var bottom = 'bottom'
     var right = 'right'
@@ -1784,76 +1677,60 @@
     var placements = /*#__PURE__*/ [].concat(basePlacements, [auto]).reduce(function (acc, placement) {
         return acc.concat([placement, placement + '-' + start, placement + '-' + end])
     }, []) // modifiers that need to read the DOM
-
     var beforeRead = 'beforeRead'
     var read = 'read'
     var afterRead = 'afterRead' // pure-logic modifiers
-
     var beforeMain = 'beforeMain'
     var main = 'main'
     var afterMain = 'afterMain' // modifier with the purpose to write to the DOM (or write into a framework state)
-
     var beforeWrite = 'beforeWrite'
     var write = 'write'
     var afterWrite = 'afterWrite'
     var modifierPhases = [beforeRead, read, afterRead, beforeMain, main, afterMain, beforeWrite, write, afterWrite]
-
     function getNodeName(element) {
         return element ? (element.nodeName || '').toLowerCase() : null
     }
-
     function getWindow(node) {
         if (node == null) {
             return window
         }
-
         if (node.toString() !== '[object Window]') {
             var ownerDocument = node.ownerDocument
             return ownerDocument ? ownerDocument.defaultView || window : window
         }
-
         return node
     }
-
     function isElement(node) {
         var OwnElement = getWindow(node).Element
         return node instanceof OwnElement || node instanceof Element
     }
-
     function isHTMLElement(node) {
         var OwnElement = getWindow(node).HTMLElement
         return node instanceof OwnElement || node instanceof HTMLElement
     }
-
     function isShadowRoot(node) {
         // IE 11 has no ShadowRoot
         if (typeof ShadowRoot === 'undefined') {
             return false
         }
-
         var OwnElement = getWindow(node).ShadowRoot
         return node instanceof OwnElement || node instanceof ShadowRoot
     }
-
     // and applies them to the HTMLElements such as popper and arrow
-
     function applyStyles(_ref) {
         var state = _ref.state
         Object.keys(state.elements).forEach(function (name) {
             var style = state.styles[name] || {}
             var attributes = state.attributes[name] || {}
             var element = state.elements[name] // arrow is optional + virtual elements
-
             if (!isHTMLElement(element) || !getNodeName(element)) {
                 return
             } // Flow doesn't support to extend this property, but it's the most
             // effective way to apply styles to an HTMLElement
             // $FlowFixMe[cannot-write]
-
             Object.assign(element.style, style)
             Object.keys(attributes).forEach(function (name) {
                 var value = attributes[name]
-
                 if (value === false) {
                     element.removeAttribute(name)
                 } else {
@@ -1862,7 +1739,6 @@
             })
         })
     }
-
     function effect$2(_ref2) {
         var state = _ref2.state
         var initialStyles = {
@@ -1879,11 +1755,9 @@
         }
         Object.assign(state.elements.popper.style, initialStyles.popper)
         state.styles = initialStyles
-
         if (state.elements.arrow) {
             Object.assign(state.elements.arrow.style, initialStyles.arrow)
         }
-
         return function () {
             Object.keys(state.elements).forEach(function (name) {
                 var element = state.elements[name]
@@ -1891,16 +1765,13 @@
                 var styleProperties = Object.keys(
                     state.styles.hasOwnProperty(name) ? state.styles[name] : initialStyles[name]
                 ) // Set all values to an empty string to unset them
-
                 var style = styleProperties.reduce(function (style, property) {
                     style[property] = ''
                     return style
                 }, {}) // arrow is optional + virtual elements
-
                 if (!isHTMLElement(element) || !getNodeName(element)) {
                     return
                 }
-
                 Object.assign(element.style, style)
                 Object.keys(attributes).forEach(function (attribute) {
                     element.removeAttribute(attribute)
@@ -1908,7 +1779,6 @@
             })
         }
     } // eslint-disable-next-line import/no-unused-modules
-
     const applyStyles$1 = {
         name: 'applyStyles',
         enabled: true,
@@ -1917,18 +1787,14 @@
         effect: effect$2,
         requires: ['computeStyles'],
     }
-
     function getBasePlacement(placement) {
         return placement.split('-')[0]
     }
-
     var max = Math.max
     var min = Math.min
     var round = Math.round
-
     function getUAString() {
         var uaData = navigator.userAgentData
-
         if (uaData != null && uaData.brands) {
             return uaData.brands
                 .map(function (item) {
@@ -1936,35 +1802,27 @@
                 })
                 .join(' ')
         }
-
         return navigator.userAgent
     }
-
     function isLayoutViewport() {
         return !/^((?!chrome|android).)*safari/i.test(getUAString())
     }
-
     function getBoundingClientRect(element, includeScale, isFixedStrategy) {
         if (includeScale === void 0) {
             includeScale = false
         }
-
         if (isFixedStrategy === void 0) {
             isFixedStrategy = false
         }
-
         var clientRect = element.getBoundingClientRect()
         var scaleX = 1
         var scaleY = 1
-
         if (includeScale && isHTMLElement(element)) {
             scaleX = element.offsetWidth > 0 ? round(clientRect.width) / element.offsetWidth || 1 : 1
             scaleY = element.offsetHeight > 0 ? round(clientRect.height) / element.offsetHeight || 1 : 1
         }
-
         var _ref = isElement(element) ? getWindow(element) : window,
             visualViewport = _ref.visualViewport
-
         var addVisualOffsets = !isLayoutViewport() && isFixedStrategy
         var x = (clientRect.left + (addVisualOffsets && visualViewport ? visualViewport.offsetLeft : 0)) / scaleX
         var y = (clientRect.top + (addVisualOffsets && visualViewport ? visualViewport.offsetTop : 0)) / scaleY
@@ -1981,24 +1839,18 @@
             y: y,
         }
     }
-
     // means it doesn't take into account transforms.
-
     function getLayoutRect(element) {
         var clientRect = getBoundingClientRect(element) // Use the clientRect sizes if it's not been transformed.
         // Fixes https://github.com/popperjs/popper-core/issues/1223
-
         var width = element.offsetWidth
         var height = element.offsetHeight
-
         if (Math.abs(clientRect.width - width) <= 1) {
             width = clientRect.width
         }
-
         if (Math.abs(clientRect.height - height) <= 1) {
             height = clientRect.height
         }
-
         return {
             x: element.offsetLeft,
             y: element.offsetTop,
@@ -2006,36 +1858,28 @@
             height: height,
         }
     }
-
     function contains(parent, child) {
         var rootNode = child.getRootNode && child.getRootNode() // First, attempt with faster native method
-
         if (parent.contains(child)) {
             return true
         } // then fallback to custom implementation with Shadow DOM support
         else if (rootNode && isShadowRoot(rootNode)) {
             var next = child
-
             do {
                 if (next && parent.isSameNode(next)) {
                     return true
                 } // $FlowFixMe[prop-missing]: need a better way to handle this...
-
                 next = next.parentNode || next.host
             } while (next)
         } // Give up, the result is false
-
         return false
     }
-
     function getComputedStyle$1(element) {
         return getWindow(element).getComputedStyle(element)
     }
-
     function isTableElement(element) {
         return ['table', 'td', 'th'].indexOf(getNodeName(element)) >= 0
     }
-
     function getDocumentElement(element) {
         // $FlowFixMe[incompatible-return]: assume body is always available
         return (
@@ -2044,12 +1888,10 @@
                 : element.document) || window.document
         ).documentElement
     }
-
     function getParentNode(element) {
         if (getNodeName(element) === 'html') {
             return element
         }
-
         return (
             // this is a quicker (but less type safe) way to save quite some bytes from the bundle
             // $FlowFixMe[incompatible-return]
@@ -2061,7 +1903,6 @@
             getDocumentElement(element) // fallback
         )
     }
-
     function getTrueOffsetParent(element) {
         if (
             !isHTMLElement(element) || // https://github.com/popperjs/popper-core/issues/837
@@ -2069,35 +1910,27 @@
         ) {
             return null
         }
-
         return element.offsetParent
     } // `.offsetParent` reports `null` for fixed elements, while absolute elements
     // return the containing block
-
     function getContainingBlock(element) {
         var isFirefox = /firefox/i.test(getUAString())
         var isIE = /Trident/i.test(getUAString())
-
         if (isIE && isHTMLElement(element)) {
             // In IE 9, 10 and 11 fixed elements containing block is always established by the viewport
             var elementCss = getComputedStyle$1(element)
-
             if (elementCss.position === 'fixed') {
                 return null
             }
         }
-
         var currentNode = getParentNode(element)
-
         if (isShadowRoot(currentNode)) {
             currentNode = currentNode.host
         }
-
         while (isHTMLElement(currentNode) && ['html', 'body'].indexOf(getNodeName(currentNode)) < 0) {
             var css = getComputedStyle$1(currentNode) // This is non-exhaustive but covers the most common CSS properties that
             // create a containing block.
             // https://developer.mozilla.org/en-US/docs/Web/CSS/Containing_block#identifying_the_containing_block
-
             if (
                 css.transform !== 'none' ||
                 css.perspective !== 'none' ||
@@ -2111,19 +1944,15 @@
                 currentNode = currentNode.parentNode
             }
         }
-
         return null
     } // Gets the closest ancestor positioned element. Handles some edge cases,
     // such as table ancestors and cross browser bugs.
-
     function getOffsetParent(element) {
         var window = getWindow(element)
         var offsetParent = getTrueOffsetParent(element)
-
         while (offsetParent && isTableElement(offsetParent) && getComputedStyle$1(offsetParent).position === 'static') {
             offsetParent = getTrueOffsetParent(offsetParent)
         }
-
         if (
             offsetParent &&
             (getNodeName(offsetParent) === 'html' ||
@@ -2131,14 +1960,11 @@
         ) {
             return window
         }
-
         return offsetParent || getContainingBlock(element) || window
     }
-
     function getMainAxisFromPlacement(placement) {
         return ['top', 'bottom'].indexOf(placement) >= 0 ? 'x' : 'y'
     }
-
     function within(min$1, value, max$1) {
         return max(min$1, min(value, max$1))
     }
@@ -2146,7 +1972,6 @@
         var v = within(min, value, max)
         return v > max ? max : v
     }
-
     function getFreshSideObject() {
         return {
             top: 0,
@@ -2155,18 +1980,15 @@
             left: 0,
         }
     }
-
     function mergePaddingObject(paddingObject) {
         return Object.assign({}, getFreshSideObject(), paddingObject)
     }
-
     function expandToHashMap(value, keys) {
         return keys.reduce(function (hashMap, key) {
             hashMap[key] = value
             return hashMap
         }, {})
     }
-
     var toPaddingObject = function toPaddingObject(padding, state) {
         padding =
             typeof padding === 'function'
@@ -2178,10 +2000,8 @@
                 : padding
         return mergePaddingObject(typeof padding !== 'number' ? padding : expandToHashMap(padding, basePlacements))
     }
-
     function arrow(_ref) {
         var _state$modifiersData$
-
         var state = _ref.state,
             name = _ref.name,
             options = _ref.options
@@ -2191,11 +2011,9 @@
         var axis = getMainAxisFromPlacement(basePlacement)
         var isVertical = [left, right].indexOf(basePlacement) >= 0
         var len = isVertical ? 'height' : 'width'
-
         if (!arrowElement || !popperOffsets) {
             return
         }
-
         var paddingObject = toPaddingObject(options.padding, state)
         var arrowRect = getLayoutRect(arrowElement)
         var minProp = axis === 'y' ? top : left
@@ -2211,12 +2029,10 @@
             : 0
         var centerToReference = endDiff / 2 - startDiff / 2 // Make sure the arrow doesn't overflow the popper if the center point is
         // outside of the popper bounds
-
         var min = paddingObject[minProp]
         var max = clientSize - arrowRect[len] - paddingObject[maxProp]
         var center = clientSize / 2 - arrowRect[len] / 2 + centerToReference
         var offset = within(min, center, max) // Prevents breaking syntax highlighting...
-
         var axisProp = axis
         state.modifiersData[name] =
             ((_state$modifiersData$ = {}),
@@ -2224,32 +2040,25 @@
             (_state$modifiersData$.centerOffset = offset - center),
             _state$modifiersData$)
     }
-
     function effect$1(_ref2) {
         var state = _ref2.state,
             options = _ref2.options
         var _options$element = options.element,
             arrowElement = _options$element === void 0 ? '[data-popper-arrow]' : _options$element
-
         if (arrowElement == null) {
             return
         } // CSS selector
-
         if (typeof arrowElement === 'string') {
             arrowElement = state.elements.popper.querySelector(arrowElement)
-
             if (!arrowElement) {
                 return
             }
         }
-
         if (!contains(state.elements.popper, arrowElement)) {
             return
         }
-
         state.elements.arrow = arrowElement
     } // eslint-disable-next-line import/no-unused-modules
-
     const arrow$1 = {
         name: 'arrow',
         enabled: true,
@@ -2259,11 +2068,9 @@
         requires: ['popperOffsets'],
         requiresIfExists: ['preventOverflow'],
     }
-
     function getVariation(placement) {
         return placement.split('-')[1]
     }
-
     var unsetSides = {
         top: 'auto',
         right: 'auto',
@@ -2272,7 +2079,6 @@
     } // Round the offsets to the nearest suitable subpixel based on the DPR.
     // Zooming can change the DPR, but it seems to report a value that will
     // cleanly divide the values into the appropriate subpixels.
-
     function roundOffsetsByDPR(_ref) {
         var x = _ref.x,
             y = _ref.y
@@ -2283,10 +2089,8 @@
             y: round(y * dpr) / dpr || 0,
         }
     }
-
     function mapToStyles(_ref2) {
         var _Object$assign2
-
         var popper = _ref2.popper,
             popperRect = _ref2.popperRect,
             placement = _ref2.placement,
@@ -2301,7 +2105,6 @@
             x = _offsets$x === void 0 ? 0 : _offsets$x,
             _offsets$y = offsets.y,
             y = _offsets$y === void 0 ? 0 : _offsets$y
-
         var _ref3 =
             typeof roundOffsets === 'function'
                 ? roundOffsets({
@@ -2312,7 +2115,6 @@
                       x: x,
                       y: y,
                   }
-
         x = _ref3.x
         y = _ref3.y
         var hasX = offsets.hasOwnProperty('x')
@@ -2320,23 +2122,18 @@
         var sideX = left
         var sideY = top
         var win = window
-
         if (adaptive) {
             var offsetParent = getOffsetParent(popper)
             var heightProp = 'clientHeight'
             var widthProp = 'clientWidth'
-
             if (offsetParent === getWindow(popper)) {
                 offsetParent = getDocumentElement(popper)
-
                 if (getComputedStyle$1(offsetParent).position !== 'static' && position === 'absolute') {
                     heightProp = 'scrollHeight'
                     widthProp = 'scrollWidth'
                 }
             } // $FlowFixMe[incompatible-cast]: force type refinement, we compare offsetParent with window above, but Flow doesn't detect it
-
             offsetParent = offsetParent
-
             if (placement === top || ((placement === left || placement === right) && variation === end)) {
                 sideY = bottom
                 var offsetY =
@@ -2346,7 +2143,6 @@
                 y -= offsetY - popperRect.height
                 y *= gpuAcceleration ? 1 : -1
             }
-
             if (placement === left || ((placement === top || placement === bottom) && variation === end)) {
                 sideX = right
                 var offsetX =
@@ -2357,14 +2153,12 @@
                 x *= gpuAcceleration ? 1 : -1
             }
         }
-
         var commonStyles = Object.assign(
             {
                 position: position,
             },
             adaptive && unsetSides
         )
-
         var _ref4 =
             roundOffsets === true
                 ? roundOffsetsByDPR({
@@ -2375,13 +2169,10 @@
                       x: x,
                       y: y,
                   }
-
         x = _ref4.x
         y = _ref4.y
-
         if (gpuAcceleration) {
             var _Object$assign
-
             return Object.assign(
                 {},
                 commonStyles,
@@ -2395,7 +2186,6 @@
                 _Object$assign)
             )
         }
-
         return Object.assign(
             {},
             commonStyles,
@@ -2406,7 +2196,6 @@
             _Object$assign2)
         )
     }
-
     function computeStyles(_ref5) {
         var state = _ref5.state,
             options = _ref5.options
@@ -2416,7 +2205,6 @@
             adaptive = _options$adaptive === void 0 ? true : _options$adaptive,
             _options$roundOffsets = options.roundOffsets,
             roundOffsets = _options$roundOffsets === void 0 ? true : _options$roundOffsets
-
         var commonStyles = {
             placement: getBasePlacement(state.placement),
             variation: getVariation(state.placement),
@@ -2425,7 +2213,6 @@
             gpuAcceleration: gpuAcceleration,
             isFixed: state.options.strategy === 'fixed',
         }
-
         if (state.modifiersData.popperOffsets != null) {
             state.styles.popper = Object.assign(
                 {},
@@ -2440,7 +2227,6 @@
                 )
             )
         }
-
         if (state.modifiersData.arrow != null) {
             state.styles.arrow = Object.assign(
                 {},
@@ -2455,12 +2241,10 @@
                 )
             )
         }
-
         state.attributes.popper = Object.assign({}, state.attributes.popper, {
             'data-popper-placement': state.placement,
         })
     } // eslint-disable-next-line import/no-unused-modules
-
     const computeStyles$1 = {
         name: 'computeStyles',
         enabled: true,
@@ -2468,11 +2252,9 @@
         fn: computeStyles,
         data: {},
     }
-
     var passive = {
         passive: true,
     }
-
     function effect(_ref) {
         var state = _ref.state,
             instance = _ref.instance,
@@ -2483,30 +2265,25 @@
             resize = _options$resize === void 0 ? true : _options$resize
         var window = getWindow(state.elements.popper)
         var scrollParents = [].concat(state.scrollParents.reference, state.scrollParents.popper)
-
         if (scroll) {
             scrollParents.forEach(function (scrollParent) {
                 scrollParent.addEventListener('scroll', instance.update, passive)
             })
         }
-
         if (resize) {
             window.addEventListener('resize', instance.update, passive)
         }
-
         return function () {
             if (scroll) {
                 scrollParents.forEach(function (scrollParent) {
                     scrollParent.removeEventListener('scroll', instance.update, passive)
                 })
             }
-
             if (resize) {
                 window.removeEventListener('resize', instance.update, passive)
             }
         }
     } // eslint-disable-next-line import/no-unused-modules
-
     const eventListeners = {
         name: 'eventListeners',
         enabled: true,
@@ -2515,7 +2292,6 @@
         effect: effect,
         data: {},
     }
-
     var hash$1 = {
         left: 'right',
         right: 'left',
@@ -2527,7 +2303,6 @@
             return hash$1[matched]
         })
     }
-
     var hash = {
         start: 'end',
         end: 'start',
@@ -2537,7 +2312,6 @@
             return hash[matched]
         })
     }
-
     function getWindowScroll(node) {
         var win = getWindow(node)
         var scrollLeft = win.pageXOffset
@@ -2547,7 +2321,6 @@
             scrollTop: scrollTop,
         }
     }
-
     function getWindowScrollBarX(element) {
         // If <html> has a CSS width greater than the viewport, then this will be
         // incorrect for RTL.
@@ -2558,7 +2331,6 @@
         // this (e.g. Edge 2019, IE11, Safari)
         return getBoundingClientRect(getDocumentElement(element)).left + getWindowScroll(element).scrollLeft
     }
-
     function getViewportRect(element, strategy) {
         var win = getWindow(element)
         var html = getDocumentElement(element)
@@ -2567,18 +2339,15 @@
         var height = html.clientHeight
         var x = 0
         var y = 0
-
         if (visualViewport) {
             width = visualViewport.width
             height = visualViewport.height
             var layoutViewport = isLayoutViewport()
-
             if (layoutViewport || (!layoutViewport && strategy === 'fixed')) {
                 x = visualViewport.offsetLeft
                 y = visualViewport.offsetTop
             }
         }
-
         return {
             width: width,
             height: height,
@@ -2586,12 +2355,9 @@
             y: y,
         }
     }
-
     // of the `<html>` and `<body>` rect bounds if horizontally scrollable
-
     function getDocumentRect(element) {
         var _element$ownerDocumen
-
         var html = getDocumentElement(element)
         var winScroll = getWindowScroll(element)
         var body = (_element$ownerDocumen = element.ownerDocument) == null ? void 0 : _element$ownerDocumen.body
@@ -2604,11 +2370,9 @@
         )
         var x = -winScroll.scrollLeft + getWindowScrollBarX(element)
         var y = -winScroll.scrollTop
-
         if (getComputedStyle$1(body || html).direction === 'rtl') {
             x += max(html.clientWidth, body ? body.clientWidth : 0) - width
         }
-
         return {
             width: width,
             height: height,
@@ -2616,44 +2380,35 @@
             y: y,
         }
     }
-
     function isScrollParent(element) {
         // Firefox wants us to check `-x` and `-y` variations as well
         var _getComputedStyle = getComputedStyle$1(element),
             overflow = _getComputedStyle.overflow,
             overflowX = _getComputedStyle.overflowX,
             overflowY = _getComputedStyle.overflowY
-
         return /auto|scroll|overlay|hidden/.test(overflow + overflowY + overflowX)
     }
-
     function getScrollParent(node) {
         if (['html', 'body', '#document'].indexOf(getNodeName(node)) >= 0) {
             // $FlowFixMe[incompatible-return]: assume body is always available
             return node.ownerDocument.body
         }
-
         if (isHTMLElement(node) && isScrollParent(node)) {
             return node
         }
-
         return getScrollParent(getParentNode(node))
     }
-
     /*
   given a DOM element, return the list of all scroll parents, up the list of ancesors
   until we get to the top window object. This list is what we attach scroll listeners
   to, because if any of these parent elements scroll, we'll need to re-calculate the
   reference element's position.
   */
-
     function listScrollParents(element, list) {
         var _element$ownerDocumen
-
         if (list === void 0) {
             list = []
         }
-
         var scrollParent = getScrollParent(element)
         var isBody =
             scrollParent ===
@@ -2667,7 +2422,6 @@
             ? updatedList // $FlowFixMe[incompatible-call]: isBody tells us target will be an HTMLElement here
             : updatedList.concat(listScrollParents(getParentNode(target)))
     }
-
     function rectToClientRect(rect) {
         return Object.assign({}, rect, {
             left: rect.x,
@@ -2676,7 +2430,6 @@
             bottom: rect.y + rect.height,
         })
     }
-
     function getInnerBoundingClientRect(element, strategy) {
         var rect = getBoundingClientRect(element, false, strategy === 'fixed')
         rect.top = rect.top + element.clientTop
@@ -2689,7 +2442,6 @@
         rect.y = rect.top
         return rect
     }
-
     function getClientRectFromMixedType(element, clippingParent, strategy) {
         return clippingParent === viewport
             ? rectToClientRect(getViewportRect(element, strategy))
@@ -2699,16 +2451,13 @@
     } // A "clipping parent" is an overflowable container with the characteristic of
     // clipping (or hiding) overflowing elements with a position different from
     // `initial`
-
     function getClippingParents(element) {
         var clippingParents = listScrollParents(getParentNode(element))
         var canEscapeClipping = ['absolute', 'fixed'].indexOf(getComputedStyle$1(element).position) >= 0
         var clipperElement = canEscapeClipping && isHTMLElement(element) ? getOffsetParent(element) : element
-
         if (!isElement(clipperElement)) {
             return []
         } // $FlowFixMe[incompatible-return]: https://github.com/facebook/flow/issues/1414
-
         return clippingParents.filter(function (clippingParent) {
             return (
                 isElement(clippingParent) &&
@@ -2718,7 +2467,6 @@
         })
     } // Gets the maximum area that the element is visible in due to any number of
     // clipping parents
-
     function getClippingRect(element, boundary, rootBoundary, strategy) {
         var mainClippingParents = boundary === 'clippingParents' ? getClippingParents(element) : [].concat(boundary)
         var clippingParents = [].concat(mainClippingParents, [rootBoundary])
@@ -2737,7 +2485,6 @@
         clippingRect.y = clippingRect.top
         return clippingRect
     }
-
     function computeOffsets(_ref) {
         var reference = _ref.reference,
             element = _ref.element,
@@ -2747,7 +2494,6 @@
         var commonX = reference.x + reference.width / 2 - element.width / 2
         var commonY = reference.y + reference.height / 2 - element.height / 2
         var offsets
-
         switch (basePlacement) {
             case top:
                 offsets = {
@@ -2755,59 +2501,48 @@
                     y: reference.y - element.height,
                 }
                 break
-
             case bottom:
                 offsets = {
                     x: commonX,
                     y: reference.y + reference.height,
                 }
                 break
-
             case right:
                 offsets = {
                     x: reference.x + reference.width,
                     y: commonY,
                 }
                 break
-
             case left:
                 offsets = {
                     x: reference.x - element.width,
                     y: commonY,
                 }
                 break
-
             default:
                 offsets = {
                     x: reference.x,
                     y: reference.y,
                 }
         }
-
         var mainAxis = basePlacement ? getMainAxisFromPlacement(basePlacement) : null
-
         if (mainAxis != null) {
             var len = mainAxis === 'y' ? 'height' : 'width'
-
             switch (variation) {
                 case start:
                     offsets[mainAxis] = offsets[mainAxis] - (reference[len] / 2 - element[len] / 2)
                     break
-
                 case end:
                     offsets[mainAxis] = offsets[mainAxis] + (reference[len] / 2 - element[len] / 2)
                     break
             }
         }
-
         return offsets
     }
-
     function detectOverflow(state, options) {
         if (options === void 0) {
             options = {}
         }
-
         var _options = options,
             _options$placement = _options.placement,
             placement = _options$placement === void 0 ? state.placement : _options$placement,
@@ -2845,7 +2580,6 @@
         var popperClientRect = rectToClientRect(Object.assign({}, popperRect, popperOffsets))
         var elementClientRect = elementContext === popper ? popperClientRect : referenceClientRect // positive = overflowing the clipping rect
         // 0 or negative = within the clipping rect
-
         var overflowOffsets = {
             top: clippingClientRect.top - elementClientRect.top + paddingObject.top,
             bottom: elementClientRect.bottom - clippingClientRect.bottom + paddingObject.bottom,
@@ -2853,7 +2587,6 @@
             right: elementClientRect.right - clippingClientRect.right + paddingObject.right,
         }
         var offsetData = state.modifiersData.offset // Offsets can be applied only to the popper element
-
         if (elementContext === popper && offsetData) {
             var offset = offsetData[placement]
             Object.keys(overflowOffsets).forEach(function (key) {
@@ -2862,15 +2595,12 @@
                 overflowOffsets[key] += offset[axis] * multiply
             })
         }
-
         return overflowOffsets
     }
-
     function computeAutoPlacement(state, options) {
         if (options === void 0) {
             options = {}
         }
-
         var _options = options,
             placement = _options.placement,
             boundary = _options.boundary,
@@ -2890,11 +2620,9 @@
         var allowedPlacements = placements$1.filter(function (placement) {
             return allowedAutoPlacements.indexOf(placement) >= 0
         })
-
         if (allowedPlacements.length === 0) {
             allowedPlacements = placements$1
         } // $FlowFixMe[incompatible-type]: Flow seems to have problems with two array unions...
-
         var overflows = allowedPlacements.reduce(function (acc, placement) {
             acc[placement] = detectOverflow(state, {
                 placement: placement,
@@ -2908,12 +2636,10 @@
             return overflows[a] - overflows[b]
         })
     }
-
     function getExpandedFallbackPlacements(placement) {
         if (getBasePlacement(placement) === auto) {
             return []
         }
-
         var oppositePlacement = getOppositePlacement(placement)
         return [
             getOppositeVariationPlacement(placement),
@@ -2921,16 +2647,13 @@
             getOppositeVariationPlacement(oppositePlacement),
         ]
     }
-
     function flip(_ref) {
         var state = _ref.state,
             options = _ref.options,
             name = _ref.name
-
         if (state.modifiersData[name]._skip) {
             return
         }
-
         var _options$mainAxis = options.mainAxis,
             checkMainAxis = _options$mainAxis === void 0 ? true : _options$mainAxis,
             _options$altAxis = options.altAxis,
@@ -2970,12 +2693,9 @@
         var checksMap = new Map()
         var makeFallbackChecks = true
         var firstFittingPlacement = placements[0]
-
         for (var i = 0; i < placements.length; i++) {
             var placement = placements[i]
-
             var _basePlacement = getBasePlacement(placement)
-
             var isStartVariation = getVariation(placement) === start
             var isVertical = [top, bottom].indexOf(_basePlacement) >= 0
             var len = isVertical ? 'width' : 'height'
@@ -2987,22 +2707,17 @@
                 padding: padding,
             })
             var mainVariationSide = isVertical ? (isStartVariation ? right : left) : isStartVariation ? bottom : top
-
             if (referenceRect[len] > popperRect[len]) {
                 mainVariationSide = getOppositePlacement(mainVariationSide)
             }
-
             var altVariationSide = getOppositePlacement(mainVariationSide)
             var checks = []
-
             if (checkMainAxis) {
                 checks.push(overflow[_basePlacement] <= 0)
             }
-
             if (checkAltAxis) {
                 checks.push(overflow[mainVariationSide] <= 0, overflow[altVariationSide] <= 0)
             }
-
             if (
                 checks.every(function (check) {
                     return check
@@ -3012,45 +2727,36 @@
                 makeFallbackChecks = false
                 break
             }
-
             checksMap.set(placement, checks)
         }
-
         if (makeFallbackChecks) {
             // `2` may be desired in some cases – research later
             var numberOfChecks = flipVariations ? 3 : 1
-
             var _loop = function _loop(_i) {
                 var fittingPlacement = placements.find(function (placement) {
                     var checks = checksMap.get(placement)
-
                     if (checks) {
                         return checks.slice(0, _i).every(function (check) {
                             return check
                         })
                     }
                 })
-
                 if (fittingPlacement) {
                     firstFittingPlacement = fittingPlacement
                     return 'break'
                 }
             }
-
             for (var _i = numberOfChecks; _i > 0; _i--) {
                 var _ret = _loop(_i)
-
                 if (_ret === 'break') break
             }
         }
-
         if (state.placement !== firstFittingPlacement) {
             state.modifiersData[name]._skip = true
             state.placement = firstFittingPlacement
             state.reset = true
         }
     } // eslint-disable-next-line import/no-unused-modules
-
     const flip$1 = {
         name: 'flip',
         enabled: true,
@@ -3061,7 +2767,6 @@
             _skip: false,
         },
     }
-
     function getSideOffsets(overflow, rect, preventedOffsets) {
         if (preventedOffsets === void 0) {
             preventedOffsets = {
@@ -3069,7 +2774,6 @@
                 y: 0,
             }
         }
-
         return {
             top: overflow.top - rect.height - preventedOffsets.y,
             right: overflow.right - rect.width + preventedOffsets.x,
@@ -3077,13 +2781,11 @@
             left: overflow.left - rect.width - preventedOffsets.x,
         }
     }
-
     function isAnySideFullyClipped(overflow) {
         return [top, right, bottom, left].some(function (side) {
             return overflow[side] >= 0
         })
     }
-
     function hide(_ref) {
         var state = _ref.state,
             name = _ref.name
@@ -3111,7 +2813,6 @@
             'data-popper-escaped': hasPopperEscaped,
         })
     } // eslint-disable-next-line import/no-unused-modules
-
     const hide$1 = {
         name: 'hide',
         enabled: true,
@@ -3119,11 +2820,9 @@
         requiresIfExists: ['preventOverflow'],
         fn: hide,
     }
-
     function distanceAndSkiddingToXY(placement, rects, offset) {
         var basePlacement = getBasePlacement(placement)
         var invertDistance = [left, top].indexOf(basePlacement) >= 0 ? -1 : 1
-
         var _ref =
                 typeof offset === 'function'
                     ? offset(
@@ -3134,7 +2833,6 @@
                     : offset,
             skidding = _ref[0],
             distance = _ref[1]
-
         skidding = skidding || 0
         distance = (distance || 0) * invertDistance
         return [left, right].indexOf(basePlacement) >= 0
@@ -3147,7 +2845,6 @@
                   y: distance,
               }
     }
-
     function offset(_ref2) {
         var state = _ref2.state,
             options = _ref2.options,
@@ -3161,15 +2858,12 @@
         var _data$state$placement = data[state.placement],
             x = _data$state$placement.x,
             y = _data$state$placement.y
-
         if (state.modifiersData.popperOffsets != null) {
             state.modifiersData.popperOffsets.x += x
             state.modifiersData.popperOffsets.y += y
         }
-
         state.modifiersData[name] = data
     } // eslint-disable-next-line import/no-unused-modules
-
     const offset$1 = {
         name: 'offset',
         enabled: true,
@@ -3177,7 +2871,6 @@
         requires: ['popperOffsets'],
         fn: offset,
     }
-
     function popperOffsets(_ref) {
         var state = _ref.state,
             name = _ref.name
@@ -3192,7 +2885,6 @@
             placement: state.placement,
         })
     } // eslint-disable-next-line import/no-unused-modules
-
     const popperOffsets$1 = {
         name: 'popperOffsets',
         enabled: true,
@@ -3200,11 +2892,9 @@
         fn: popperOffsets,
         data: {},
     }
-
     function getAltAxis(axis) {
         return axis === 'x' ? 'y' : 'x'
     }
-
     function preventOverflow(_ref) {
         var state = _ref.state,
             options = _ref.options,
@@ -3261,14 +2951,11 @@
             x: 0,
             y: 0,
         }
-
         if (!popperOffsets) {
             return
         }
-
         if (checkMainAxis) {
             var _offsetModifierState$
-
             var mainSide = mainAxis === 'y' ? top : left
             var altSide = mainAxis === 'y' ? bottom : right
             var len = mainAxis === 'y' ? 'height' : 'width'
@@ -3279,7 +2966,6 @@
             var minLen = variation === start ? referenceRect[len] : popperRect[len]
             var maxLen = variation === start ? -popperRect[len] : -referenceRect[len] // We need to include the arrow in the calculation so the arrow doesn't go
             // outside the reference bounds
-
             var arrowElement = state.elements.arrow
             var arrowRect =
                 tether && arrowElement
@@ -3297,7 +2983,6 @@
             // and near the edge of a boundary, the popper can overflow even if the
             // reference is not overflowing as well (e.g. virtual elements with no
             // width or height)
-
             var arrowLen = within(0, referenceRect[len], arrowRect[len])
             var minOffset = isBasePlacement
                 ? referenceRect[len] / 2 - additive - arrowLen - arrowPaddingMin - normalizedTetherOffsetValue.mainAxis
@@ -3325,29 +3010,19 @@
             popperOffsets[mainAxis] = preventedOffset
             data[mainAxis] = preventedOffset - offset
         }
-
         if (checkAltAxis) {
             var _offsetModifierState$2
-
             var _mainSide = mainAxis === 'x' ? top : left
-
             var _altSide = mainAxis === 'x' ? bottom : right
-
             var _offset = popperOffsets[altAxis]
-
             var _len = altAxis === 'y' ? 'height' : 'width'
-
             var _min = _offset + overflow[_mainSide]
-
             var _max = _offset - overflow[_altSide]
-
             var isOriginSide = [top, left].indexOf(basePlacement) !== -1
-
             var _offsetModifierValue =
                 (_offsetModifierState$2 = offsetModifierState == null ? void 0 : offsetModifierState[altAxis]) != null
                     ? _offsetModifierState$2
                     : 0
-
             var _tetherMin = isOriginSide
                 ? _min
                 : _offset -
@@ -3355,7 +3030,6 @@
                   popperRect[_len] -
                   _offsetModifierValue +
                   normalizedTetherOffsetValue.altAxis
-
             var _tetherMax = isOriginSide
                 ? _offset +
                   referenceRect[_len] +
@@ -3363,19 +3037,15 @@
                   _offsetModifierValue -
                   normalizedTetherOffsetValue.altAxis
                 : _max
-
             var _preventedOffset =
                 tether && isOriginSide
                     ? withinMaxClamp(_tetherMin, _offset, _tetherMax)
                     : within(tether ? _tetherMin : _min, _offset, tether ? _tetherMax : _max)
-
             popperOffsets[altAxis] = _preventedOffset
             data[altAxis] = _preventedOffset - _offset
         }
-
         state.modifiersData[name] = data
     } // eslint-disable-next-line import/no-unused-modules
-
     const preventOverflow$1 = {
         name: 'preventOverflow',
         enabled: true,
@@ -3383,14 +3053,12 @@
         fn: preventOverflow,
         requiresIfExists: ['offset'],
     }
-
     function getHTMLElementScroll(element) {
         return {
             scrollLeft: element.scrollLeft,
             scrollTop: element.scrollTop,
         }
     }
-
     function getNodeScroll(node) {
         if (node === getWindow(node) || !isHTMLElement(node)) {
             return getWindowScroll(node)
@@ -3398,7 +3066,6 @@
             return getHTMLElementScroll(node)
         }
     }
-
     function isElementScaled(element) {
         var rect = element.getBoundingClientRect()
         var scaleX = round(rect.width) / element.offsetWidth || 1
@@ -3406,12 +3073,10 @@
         return scaleX !== 1 || scaleY !== 1
     } // Returns the composite rect of an element relative to its offsetParent.
     // Composite means it takes into account transforms as well as layout.
-
     function getCompositeRect(elementOrVirtualElement, offsetParent, isFixed) {
         if (isFixed === void 0) {
             isFixed = false
         }
-
         var isOffsetParentAnElement = isHTMLElement(offsetParent)
         var offsetParentIsScaled = isHTMLElement(offsetParent) && isElementScaled(offsetParent)
         var documentElement = getDocumentElement(offsetParent)
@@ -3424,7 +3089,6 @@
             x: 0,
             y: 0,
         }
-
         if (isOffsetParentAnElement || (!isOffsetParentAnElement && !isFixed)) {
             if (
                 getNodeName(offsetParent) !== 'body' || // https://github.com/popperjs/popper-core/issues/1078
@@ -3432,7 +3096,6 @@
             ) {
                 scroll = getNodeScroll(offsetParent)
             }
-
             if (isHTMLElement(offsetParent)) {
                 offsets = getBoundingClientRect(offsetParent, true)
                 offsets.x += offsetParent.clientLeft
@@ -3441,7 +3104,6 @@
                 offsets.x = getWindowScrollBarX(documentElement)
             }
         }
-
         return {
             x: rect.left + scroll.scrollLeft - offsets.x,
             y: rect.top + scroll.scrollTop - offsets.y,
@@ -3449,7 +3111,6 @@
             height: rect.height,
         }
     }
-
     function order(modifiers) {
         var map = new Map()
         var visited = new Set()
@@ -3457,14 +3118,12 @@
         modifiers.forEach(function (modifier) {
             map.set(modifier.name, modifier)
         }) // On visiting object, check for its dependencies and visit them recursively
-
         function sort(modifier) {
             visited.add(modifier.name)
             var requires = [].concat(modifier.requires || [], modifier.requiresIfExists || [])
             requires.forEach(function (dep) {
                 if (!visited.has(dep)) {
                     var depModifier = map.get(dep)
-
                     if (depModifier) {
                         sort(depModifier)
                     }
@@ -3472,7 +3131,6 @@
             })
             result.push(modifier)
         }
-
         modifiers.forEach(function (modifier) {
             if (!visited.has(modifier.name)) {
                 // check for visited object
@@ -3481,11 +3139,9 @@
         })
         return result
     }
-
     function orderModifiers(modifiers) {
         // order based on dependencies
         var orderedModifiers = order(modifiers) // order based on phase
-
         return modifierPhases.reduce(function (acc, phase) {
             return acc.concat(
                 orderedModifiers.filter(function (modifier) {
@@ -3494,7 +3150,6 @@
             )
         }, [])
     }
-
     function debounce(fn) {
         var pending
         return function () {
@@ -3506,11 +3161,9 @@
                     })
                 })
             }
-
             return pending
         }
     }
-
     function mergeByName(modifiers) {
         var merged = modifiers.reduce(function (merged, current) {
             var existing = merged[current.name]
@@ -3522,33 +3175,27 @@
                 : current
             return merged
         }, {}) // IE11 does not support Object.values
-
         return Object.keys(merged).map(function (key) {
             return merged[key]
         })
     }
-
     var DEFAULT_OPTIONS = {
         placement: 'bottom',
         modifiers: [],
         strategy: 'absolute',
     }
-
     function areValidElements() {
         for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
             args[_key] = arguments[_key]
         }
-
         return !args.some(function (element) {
             return !(element && typeof element.getBoundingClientRect === 'function')
         })
     }
-
     function popperGenerator(generatorOptions) {
         if (generatorOptions === void 0) {
             generatorOptions = {}
         }
-
         var _generatorOptions = generatorOptions,
             _generatorOptions$def = _generatorOptions.defaultModifiers,
             defaultModifiers = _generatorOptions$def === void 0 ? [] : _generatorOptions$def,
@@ -3558,7 +3205,6 @@
             if (options === void 0) {
                 options = defaultOptions
             }
-
             var state = {
                 placement: 'bottom',
                 orderedModifiers: [],
@@ -3589,15 +3235,12 @@
                         popper: listScrollParents(popper),
                     } // Orders the modifiers based on their dependencies and `phase`
                     // properties
-
                     var orderedModifiers = orderModifiers(
                         mergeByName([].concat(defaultModifiers, state.options.modifiers))
                     ) // Strip out disabled modifiers
-
                     state.orderedModifiers = orderedModifiers.filter(function (m) {
                         return m.enabled
                     }) // Validate the provided modifiers so that the consumer will get warned
-
                     runModifierEffects()
                     return instance.update()
                 },
@@ -3610,16 +3253,13 @@
                     if (isDestroyed) {
                         return
                     }
-
                     var _state$elements = state.elements,
                         reference = _state$elements.reference,
                         popper = _state$elements.popper // Don't proceed if `reference` or `popper` are not valid elements
                     // anymore
-
                     if (!areValidElements(reference, popper)) {
                         return
                     } // Store the reference and popper rects to be read by modifiers
-
                     state.rects = {
                         reference: getCompositeRect(
                             reference,
@@ -3632,30 +3272,25 @@
                     // placement, which then needs to re-run all the modifiers, because the
                     // logic was previously ran for the previous placement and is therefore
                     // stale/incorrect
-
                     state.reset = false
                     state.placement = state.options.placement // On each update cycle, the `modifiersData` property for each modifier
                     // is filled with the initial data specified by the modifier. This means
                     // it doesn't persist and is fresh on each update.
                     // To ensure persistent data, use `${name}#persistent`
-
                     state.orderedModifiers.forEach(function (modifier) {
                         return (state.modifiersData[modifier.name] = Object.assign({}, modifier.data))
                     })
-
                     for (var index = 0; index < state.orderedModifiers.length; index++) {
                         if (state.reset === true) {
                             state.reset = false
                             index = -1
                             continue
                         }
-
                         var _state$orderedModifie = state.orderedModifiers[index],
                             fn = _state$orderedModifie.fn,
                             _state$orderedModifie2 = _state$orderedModifie.options,
                             _options = _state$orderedModifie2 === void 0 ? {} : _state$orderedModifie2,
                             name = _state$orderedModifie.name
-
                         if (typeof fn === 'function') {
                             state =
                                 fn({
@@ -3680,11 +3315,9 @@
                     isDestroyed = true
                 },
             }
-
             if (!areValidElements(reference, popper)) {
                 return instance
             }
-
             instance.setOptions(options).then(function (state) {
                 if (!isDestroyed && options.onFirstUpdate) {
                     options.onFirstUpdate(state)
@@ -3694,14 +3327,12 @@
             // cycle. This is useful when a modifier adds some persistent data that
             // other modifiers need to use, but the modifier is run after the dependent
             // one.
-
             function runModifierEffects() {
                 state.orderedModifiers.forEach(function (_ref3) {
                     var name = _ref3.name,
                         _ref3$options = _ref3.options,
                         options = _ref3$options === void 0 ? {} : _ref3$options,
                         effect = _ref3.effect
-
                     if (typeof effect === 'function') {
                         var cleanupFn = effect({
                             state: state,
@@ -3709,31 +3340,25 @@
                             instance: instance,
                             options: options,
                         })
-
                         var noopFn = function noopFn() {}
-
                         effectCleanupFns.push(cleanupFn || noopFn)
                     }
                 })
             }
-
             function cleanupModifierEffects() {
                 effectCleanupFns.forEach(function (fn) {
                     return fn()
                 })
                 effectCleanupFns = []
             }
-
             return instance
         }
     }
     var createPopper$2 = /*#__PURE__*/ popperGenerator() // eslint-disable-next-line import/no-unused-modules
-
     var defaultModifiers$1 = [eventListeners, popperOffsets$1, computeStyles$1, applyStyles$1]
     var createPopper$1 = /*#__PURE__*/ popperGenerator({
         defaultModifiers: defaultModifiers$1,
     }) // eslint-disable-next-line import/no-unused-modules
-
     var defaultModifiers = [
         eventListeners,
         popperOffsets$1,
@@ -3748,7 +3373,6 @@
     var createPopper = /*#__PURE__*/ popperGenerator({
         defaultModifiers: defaultModifiers,
     }) // eslint-disable-next-line import/no-unused-modules
-
     const Popper = /*#__PURE__*/ Object.freeze(
         /*#__PURE__*/ Object.defineProperty(
             {
@@ -3796,18 +3420,15 @@
             { value: 'Module' }
         )
     )
-
     /**
      * --------------------------------------------------------------------------
      * Bootstrap (v5.3.0-alpha1): dropdown.js
      * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
      * --------------------------------------------------------------------------
      */
-
     /**
      * Constants
      */
-
     const NAME$a = 'dropdown'
     const DATA_KEY$6 = 'bs.dropdown'
     const EVENT_KEY$6 = `.${DATA_KEY$6}`
@@ -3817,7 +3438,6 @@
     const ARROW_UP_KEY$1 = 'ArrowUp'
     const ARROW_DOWN_KEY$1 = 'ArrowDown'
     const RIGHT_MOUSE_BUTTON = 2 // MouseEvent.button value for the secondary button, usually the right button
-
     const EVENT_HIDE$5 = `hide${EVENT_KEY$6}`
     const EVENT_HIDDEN$5 = `hidden${EVENT_KEY$6}`
     const EVENT_SHOW$5 = `show${EVENT_KEY$6}`
@@ -3861,11 +3481,9 @@
         popperConfig: '(null|object|function)',
         reference: '(string|element|object)',
     }
-
     /**
      * Class definition
      */
-
     class Dropdown extends BaseComponent {
         constructor(element, config) {
             super(element, config)
@@ -3878,7 +3496,6 @@
                 SelectorEngine.findOne(SELECTOR_MENU, this._parent)
             this._inNavbar = this._detectNavbar()
         }
-
         // Getters
         static get Default() {
             return Default$9
@@ -3889,7 +3506,6 @@
         static get NAME() {
             return NAME$a
         }
-
         // Public
         toggle() {
             return this._isShown() ? this.hide() : this.show()
@@ -3906,7 +3522,6 @@
                 return
             }
             this._createPopper()
-
             // If this is a touch-enabled device we add extra
             // empty mouseover listeners to the body's immediate children;
             // only needed because of broken event delegation on iOS
@@ -3943,14 +3558,12 @@
                 this._popper.update()
             }
         }
-
         // Private
         _completeHide(relatedTarget) {
             const hideEvent = EventHandler.trigger(this._element, EVENT_HIDE$5, relatedTarget)
             if (hideEvent.defaultPrevented) {
                 return
             }
-
             // If this is a touch-enabled device we remove the extra
             // empty mouseover listeners we added for iOS support
             if ('ontouchstart' in document.documentElement) {
@@ -4013,7 +3626,6 @@
             if (parentDropdown.classList.contains(CLASS_NAME_DROPDOWN_CENTER)) {
                 return PLACEMENT_BOTTOMCENTER
             }
-
             // We need to trim the value because custom properties can also include spaces
             const isEnd = getComputedStyle(this._menu).getPropertyValue('--bs-position').trim() === 'end'
             if (parentDropdown.classList.contains(CLASS_NAME_DROPUP)) {
@@ -4052,7 +3664,6 @@
                     },
                 ],
             }
-
             // Disable Popper if we have a static display or Dropdown is in Navbar
             if (this._inNavbar || this._config.display === 'static') {
                 Manipulator.setDataAttribute(this._menu, 'popper', 'static') // todo:v6 remove
@@ -4075,12 +3686,10 @@
             if (!items.length) {
                 return
             }
-
             // if target isn't included in items (e.g. when expanding the dropdown)
             // allow cycling to get the last item in case key equals ARROW_UP_KEY
             getNextActiveElement(items, target, key === ARROW_DOWN_KEY$1, !items.includes(target)).focus()
         }
-
         // Static
         static jQueryInterface(config) {
             return this.each(function () {
@@ -4113,7 +3722,6 @@
                 ) {
                     continue
                 }
-
                 // Tab navigation through the dropdown menu or events from contained inputs shouldn't close the menu
                 if (
                     context._menu.contains(event.target) &&
@@ -4134,7 +3742,6 @@
         static dataApiKeydownHandler(event) {
             // If not an UP | DOWN | ESCAPE key => not a dropdown command
             // If input/textarea && if key is other than ESCAPE => not a dropdown command
-
             const isInput = /input|textarea/i.test(event.target.tagName)
             const isEscapeEvent = event.key === ESCAPE_KEY$2
             const isUpOrDownEvent = [ARROW_UP_KEY$1, ARROW_DOWN_KEY$1].includes(event.key)
@@ -4145,7 +3752,6 @@
                 return
             }
             event.preventDefault()
-
             // todo: v6 revert #37011 & change markup https://getbootstrap.com/docs/5.3/forms/input-group/
             const getToggleButton = this.matches(SELECTOR_DATA_TOGGLE$3)
                 ? this
@@ -4167,11 +3773,9 @@
             }
         }
     }
-
     /**
      * Data API implementation
      */
-
     EventHandler.on(document, EVENT_KEYDOWN_DATA_API, SELECTOR_DATA_TOGGLE$3, Dropdown.dataApiKeydownHandler)
     EventHandler.on(document, EVENT_KEYDOWN_DATA_API, SELECTOR_MENU, Dropdown.dataApiKeydownHandler)
     EventHandler.on(document, EVENT_CLICK_DATA_API$3, Dropdown.clearMenus)
@@ -4180,38 +3784,30 @@
         event.preventDefault()
         Dropdown.getOrCreateInstance(this).toggle()
     })
-
     /**
      * jQuery
      */
-
     defineJQueryPlugin(Dropdown)
-
     /**
      * --------------------------------------------------------------------------
      * Bootstrap (v5.3.0-alpha1): util/scrollBar.js
      * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
      * --------------------------------------------------------------------------
      */
-
     /**
      * Constants
      */
-
     const SELECTOR_FIXED_CONTENT = '.fixed-top, .fixed-bottom, .is-fixed, .sticky-top'
     const SELECTOR_STICKY_CONTENT = '.sticky-top'
     const PROPERTY_PADDING = 'padding-right'
     const PROPERTY_MARGIN = 'margin-right'
-
     /**
      * Class definition
      */
-
     class ScrollBarHelper {
         constructor() {
             this._element = document.body
         }
-
         // Public
         getWidth() {
             // https://developer.mozilla.org/en-US/docs/Web/API/Window/innerWidth#usage_notes
@@ -4244,7 +3840,6 @@
         isOverflowing() {
             return this.getWidth() > 0
         }
-
         // Private
         _disableOverFlow() {
             this._saveInitialAttribute(this._element, 'overflow')
@@ -4291,18 +3886,15 @@
             }
         }
     }
-
     /**
      * --------------------------------------------------------------------------
      * Bootstrap (v5.3.0-alpha1): util/backdrop.js
      * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
      * --------------------------------------------------------------------------
      */
-
     /**
      * Constants
      */
-
     const NAME$9 = 'backdrop'
     const CLASS_NAME_FADE$4 = 'fade'
     const CLASS_NAME_SHOW$5 = 'show'
@@ -4315,7 +3907,6 @@
         // if false, we use the backdrop helper without adding any element to the dom
         rootElement: 'body', // give the choice to place backdrop under different elements
     }
-
     const DefaultType$8 = {
         className: 'string',
         clickCallback: '(function|null)',
@@ -4323,11 +3914,9 @@
         isVisible: 'boolean',
         rootElement: '(element|string)',
     }
-
     /**
      * Class definition
      */
-
     class Backdrop extends Config {
         constructor(config) {
             super()
@@ -4335,7 +3924,6 @@
             this._isAppended = false
             this._element = null
         }
-
         // Getters
         static get Default() {
             return Default$8
@@ -4346,7 +3934,6 @@
         static get NAME() {
             return NAME$9
         }
-
         // Public
         show(callback) {
             if (!this._config.isVisible) {
@@ -4382,7 +3969,6 @@
             this._element.remove()
             this._isAppended = false
         }
-
         // Private
         _getElement() {
             if (!this._element) {
@@ -4415,18 +4001,15 @@
             executeAfterTransition(callback, this._getElement(), this._config.isAnimated)
         }
     }
-
     /**
      * --------------------------------------------------------------------------
      * Bootstrap (v5.3.0-alpha1): util/focustrap.js
      * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
      * --------------------------------------------------------------------------
      */
-
     /**
      * Constants
      */
-
     const NAME$8 = 'focustrap'
     const DATA_KEY$5 = 'bs.focustrap'
     const EVENT_KEY$5 = `.${DATA_KEY$5}`
@@ -4439,16 +4022,13 @@
         autofocus: true,
         trapElement: null, // The element to trap focus inside of
     }
-
     const DefaultType$7 = {
         autofocus: 'boolean',
         trapElement: 'element',
     }
-
     /**
      * Class definition
      */
-
     class FocusTrap extends Config {
         constructor(config) {
             super()
@@ -4456,7 +4036,6 @@
             this._isActive = false
             this._lastTabNavDirection = null
         }
-
         // Getters
         static get Default() {
             return Default$7
@@ -4467,7 +4046,6 @@
         static get NAME() {
             return NAME$8
         }
-
         // Public
         activate() {
             if (this._isActive) {
@@ -4488,7 +4066,6 @@
             this._isActive = false
             EventHandler.off(document, EVENT_KEY$5)
         }
-
         // Private
         _handleFocusin(event) {
             const { trapElement } = this._config
@@ -4511,18 +4088,15 @@
             this._lastTabNavDirection = event.shiftKey ? TAB_NAV_BACKWARD : TAB_NAV_FORWARD
         }
     }
-
     /**
      * --------------------------------------------------------------------------
      * Bootstrap (v5.3.0-alpha1): modal.js
      * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
      * --------------------------------------------------------------------------
      */
-
     /**
      * Constants
      */
-
     const NAME$7 = 'modal'
     const DATA_KEY$4 = 'bs.modal'
     const EVENT_KEY$4 = `.${DATA_KEY$4}`
@@ -4556,11 +4130,9 @@
         focus: 'boolean',
         keyboard: 'boolean',
     }
-
     /**
      * Class definition
      */
-
     class Modal extends BaseComponent {
         constructor(element, config) {
             super(element, config)
@@ -4572,7 +4144,6 @@
             this._scrollBar = new ScrollBarHelper()
             this._addEventListeners()
         }
-
         // Getters
         static get Default() {
             return Default$6
@@ -4583,7 +4154,6 @@
         static get NAME() {
             return NAME$7
         }
-
         // Public
         toggle(relatedTarget) {
             return this._isShown ? this.hide() : this.show(relatedTarget)
@@ -4630,7 +4200,6 @@
         handleUpdate() {
             this._adjustDialog()
         }
-
         // Private
         _initializeBackDrop() {
             return new Backdrop({
@@ -4743,11 +4312,9 @@
             }, this._dialog)
             this._element.focus()
         }
-
         /**
          * The following methods are used to handle overflowing modals
          */
-
         _adjustDialog() {
             const isModalOverflowing = this._element.scrollHeight > document.documentElement.clientHeight
             const scrollbarWidth = this._scrollBar.getWidth()
@@ -4765,7 +4332,6 @@
             this._element.style.paddingLeft = ''
             this._element.style.paddingRight = ''
         }
-
         // Static
         static jQueryInterface(config, relatedTarget) {
             return this.each(function () {
@@ -4780,11 +4346,9 @@
             })
         }
     }
-
     /**
      * Data API implementation
      */
-
     EventHandler.on(document, EVENT_CLICK_DATA_API$2, SELECTOR_DATA_TOGGLE$2, function (event) {
         const target = SelectorEngine.getElementFromSelector(this)
         if (['A', 'AREA'].includes(this.tagName)) {
@@ -4801,7 +4365,6 @@
                 }
             })
         })
-
         // avoid conflict when clicking modal toggler while another one is open
         const alreadyOpen = SelectorEngine.findOne(OPEN_SELECTOR$1)
         if (alreadyOpen) {
@@ -4811,24 +4374,19 @@
         data.toggle(this)
     })
     enableDismissTrigger(Modal)
-
     /**
      * jQuery
      */
-
     defineJQueryPlugin(Modal)
-
     /**
      * --------------------------------------------------------------------------
      * Bootstrap (v5.3.0-alpha1): offcanvas.js
      * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
      * --------------------------------------------------------------------------
      */
-
     /**
      * Constants
      */
-
     const NAME$6 = 'offcanvas'
     const DATA_KEY$3 = 'bs.offcanvas'
     const EVENT_KEY$3 = `.${DATA_KEY$3}`
@@ -4859,11 +4417,9 @@
         keyboard: 'boolean',
         scroll: 'boolean',
     }
-
     /**
      * Class definition
      */
-
     class Offcanvas extends BaseComponent {
         constructor(element, config) {
             super(element, config)
@@ -4872,7 +4428,6 @@
             this._focustrap = this._initializeFocusTrap()
             this._addEventListeners()
         }
-
         // Getters
         static get Default() {
             return Default$5
@@ -4883,7 +4438,6 @@
         static get NAME() {
             return NAME$6
         }
-
         // Public
         toggle(relatedTarget) {
             return this._isShown ? this.hide() : this.show(relatedTarget)
@@ -4947,7 +4501,6 @@
             this._focustrap.deactivate()
             super.dispose()
         }
-
         // Private
         _initializeBackDrop() {
             const clickCallback = () => {
@@ -4957,7 +4510,6 @@
                 }
                 this.hide()
             }
-
             // 'static' option will be translated to true, and booleans will keep their value
             const isVisible = Boolean(this._config.backdrop)
             return new Backdrop({
@@ -4985,7 +4537,6 @@
                 this.hide()
             })
         }
-
         // Static
         static jQueryInterface(config) {
             return this.each(function () {
@@ -5000,11 +4551,9 @@
             })
         }
     }
-
     /**
      * Data API implementation
      */
-
     EventHandler.on(document, EVENT_CLICK_DATA_API$1, SELECTOR_DATA_TOGGLE$1, function (event) {
         const target = SelectorEngine.getElementFromSelector(this)
         if (['A', 'AREA'].includes(this.tagName)) {
@@ -5019,7 +4568,6 @@
                 this.focus()
             }
         })
-
         // avoid conflict when clicking a toggler of an offcanvas, while another is open
         const alreadyOpen = SelectorEngine.findOne(OPEN_SELECTOR)
         if (alreadyOpen && alreadyOpen !== target) {
@@ -5041,30 +4589,24 @@
         }
     })
     enableDismissTrigger(Offcanvas)
-
     /**
      * jQuery
      */
-
     defineJQueryPlugin(Offcanvas)
-
     /**
      * --------------------------------------------------------------------------
      * Bootstrap (v5.3.0-alpha1): util/sanitizer.js
      * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
      * --------------------------------------------------------------------------
      */
-
     const uriAttributes = new Set(['background', 'cite', 'href', 'itemtype', 'longdesc', 'poster', 'src', 'xlink:href'])
     const ARIA_ATTRIBUTE_PATTERN = /^aria-[\w-]*$/i
-
     /**
      * A pattern that recognizes a commonly useful subset of URLs that are safe.
      *
      * Shout-out to Angular https://github.com/angular/angular/blob/12.2.x/packages/core/src/sanitization/url_sanitizer.ts
      */
     const SAFE_URL_PATTERN = /^(?:(?:https?|mailto|ftp|tel|file|sms):|[^#&/:?]*(?:[#/?]|$))/i
-
     /**
      * A pattern that matches safe data URLs. Only matches image, video and audio types.
      *
@@ -5080,7 +4622,6 @@
             }
             return true
         }
-
         // Check if a regular expression validates the attribute.
         return allowedAttributeList
             .filter((attributeRegex) => attributeRegex instanceof RegExp)
@@ -5145,18 +4686,15 @@
         }
         return createdDocument.body.innerHTML
     }
-
     /**
      * --------------------------------------------------------------------------
      * Bootstrap (v5.3.0-alpha1): util/template-factory.js
      * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
      * --------------------------------------------------------------------------
      */
-
     /**
      * Constants
      */
-
     const NAME$5 = 'TemplateFactory'
     const Default$4 = {
         allowList: DefaultAllowlist,
@@ -5181,17 +4719,14 @@
         entry: '(string|element|function|null)',
         selector: '(string|element)',
     }
-
     /**
      * Class definition
      */
-
     class TemplateFactory extends Config {
         constructor(config) {
             super()
             this._config = this._getConfig(config)
         }
-
         // Getters
         static get Default() {
             return Default$4
@@ -5202,7 +4737,6 @@
         static get NAME() {
             return NAME$5
         }
-
         // Public
         getContent() {
             return Object.values(this._config.content)
@@ -5233,7 +4767,6 @@
             }
             return template
         }
-
         // Private
         _typeCheckConfig(config) {
             super._typeCheckConfig(config)
@@ -5285,18 +4818,15 @@
             templateElement.textContent = element.textContent
         }
     }
-
     /**
      * --------------------------------------------------------------------------
      * Bootstrap (v5.3.0-alpha1): tooltip.js
      * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
      * --------------------------------------------------------------------------
      */
-
     /**
      * Constants
      */
-
     const NAME$4 = 'tooltip'
     const DISALLOWED_ATTRIBUTES = new Set(['sanitize', 'allowList', 'sanitizeFn'])
     const CLASS_NAME_FADE$2 = 'fade'
@@ -5368,18 +4898,15 @@
         title: '(string|element|function)',
         trigger: 'string',
     }
-
     /**
      * Class definition
      */
-
     class Tooltip extends BaseComponent {
         constructor(element, config) {
             if (typeof Popper === 'undefined') {
                 throw new TypeError("Bootstrap's tooltips require Popper (https://popper.js.org)")
             }
             super(element, config)
-
             // Private
             this._isEnabled = true
             this._timeout = 0
@@ -5388,7 +4915,6 @@
             this._popper = null
             this._templateFactory = null
             this._newContent = null
-
             // Protected
             this.tip = null
             this._setListeners()
@@ -5396,7 +4922,6 @@
                 this._fixTitle()
             }
         }
-
         // Getters
         static get Default() {
             return Default$3
@@ -5407,7 +4932,6 @@
         static get NAME() {
             return NAME$4
         }
-
         // Public
         enable() {
             this._isEnabled = true
@@ -5451,7 +4975,6 @@
             if (showEvent.defaultPrevented || !isInTheDom) {
                 return
             }
-
             // todo v6 remove this OR make it optional
             this._disposePopper()
             const tip = this._getTipElement()
@@ -5463,7 +4986,6 @@
             }
             this._popper = this._createPopper(tip)
             tip.classList.add(CLASS_NAME_SHOW$2)
-
             // If this is a touch-enabled device we add extra
             // empty mouseover listeners to the body's immediate children;
             // only needed because of broken event delegation on iOS
@@ -5492,7 +5014,6 @@
             }
             const tip = this._getTipElement()
             tip.classList.remove(CLASS_NAME_SHOW$2)
-
             // If this is a touch-enabled device we remove the extra
             // empty mouseover listeners we added for iOS support
             if ('ontouchstart' in document.documentElement) {
@@ -5504,7 +5025,6 @@
             this._activeTrigger[TRIGGER_FOCUS] = false
             this._activeTrigger[TRIGGER_HOVER] = false
             this._isHovered = null // it is a trick to support manual triggering
-
             const complete = () => {
                 if (this._isWithActiveTrigger()) {
                     return
@@ -5522,7 +5042,6 @@
                 this._popper.update()
             }
         }
-
         // Protected
         _isWithContent() {
             return Boolean(this._getTitle())
@@ -5535,7 +5054,6 @@
         }
         _createTipElement(content) {
             const tip = this._getTemplateFactory(content).toHtml()
-
             // todo: remove this check on v6
             if (!tip) {
                 return null
@@ -5582,7 +5100,6 @@
                 this._element.getAttribute('data-bs-original-title')
             )
         }
-
         // Private
         _initializeOnDelegatedTarget(event) {
             return this.constructor.getOrCreateInstance(event.delegateTarget, this._getDelegateConfig())
@@ -5780,7 +5297,6 @@
             }
             config.selector = false
             config.trigger = 'manual'
-
             // In the future can be replaced with:
             // const keysWithDifferentValues = Object.entries(this._config).filter(entry => this.constructor.Default[entry[0]] !== this._config[entry[0]])
             // `Object.fromEntries(keysWithDifferentValues)`
@@ -5796,7 +5312,6 @@
                 this.tip = null
             }
         }
-
         // Static
         static jQueryInterface(config) {
             return this.each(function () {
@@ -5811,24 +5326,19 @@
             })
         }
     }
-
     /**
      * jQuery
      */
-
     defineJQueryPlugin(Tooltip)
-
     /**
      * --------------------------------------------------------------------------
      * Bootstrap (v5.3.0-alpha1): popover.js
      * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
      * --------------------------------------------------------------------------
      */
-
     /**
      * Constants
      */
-
     const NAME$3 = 'popover'
     const SELECTOR_TITLE = '.popover-header'
     const SELECTOR_CONTENT = '.popover-body'
@@ -5849,11 +5359,9 @@
         ...Tooltip.DefaultType,
         content: '(null|string|element|function)',
     }
-
     /**
      * Class definition
      */
-
     class Popover extends Tooltip {
         // Getters
         static get Default() {
@@ -5865,12 +5373,10 @@
         static get NAME() {
             return NAME$3
         }
-
         // Overrides
         _isWithContent() {
             return this._getTitle() || this._getContent()
         }
-
         // Private
         _getContentForTemplate() {
             return {
@@ -5881,7 +5387,6 @@
         _getContent() {
             return this._resolvePossibleFunction(this._config.content)
         }
-
         // Static
         static jQueryInterface(config) {
             return this.each(function () {
@@ -5896,24 +5401,19 @@
             })
         }
     }
-
     /**
      * jQuery
      */
-
     defineJQueryPlugin(Popover)
-
     /**
      * --------------------------------------------------------------------------
      * Bootstrap (v5.3.0-alpha1): scrollspy.js
      * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
      * --------------------------------------------------------------------------
      */
-
     /**
      * Constants
      */
-
     const NAME$2 = 'scrollspy'
     const DATA_KEY$2 = 'bs.scrollspy'
     const EVENT_KEY$2 = `.${DATA_KEY$2}`
@@ -5948,15 +5448,12 @@
         target: 'element',
         threshold: 'array',
     }
-
     /**
      * Class definition
      */
-
     class ScrollSpy extends BaseComponent {
         constructor(element, config) {
             super(element, config)
-
             // this._element is the observablesContainer and config.target the menu links wrapper
             this._targetLinks = new Map()
             this._observableSections = new Map()
@@ -5969,7 +5466,6 @@
             }
             this.refresh() // initialize
         }
-
         // Getters
         static get Default() {
             return Default$1
@@ -5980,7 +5476,6 @@
         static get NAME() {
             return NAME$2
         }
-
         // Public
         refresh() {
             this._initializeTargetsAndObservables()
@@ -5998,12 +5493,10 @@
             this._observer.disconnect()
             super.dispose()
         }
-
         // Private
         _configAfterMerge(config) {
             // TODO: on v6 target should be given explicitly & remove the {target: 'ss-target'} case
             config.target = getElement(config.target) || document.body
-
             // TODO: v6 Only for backwards compatibility reasons. Use rootMargin only
             config.rootMargin = config.offset ? `${config.offset}px 0px -30%` : config.rootMargin
             if (typeof config.threshold === 'string') {
@@ -6015,7 +5508,6 @@
             if (!this._config.smoothScroll) {
                 return
             }
-
             // unregister any previous listeners
             EventHandler.off(this._config.target, EVENT_CLICK)
             EventHandler.on(this._config.target, EVENT_CLICK, SELECTOR_TARGET_LINKS, (event) => {
@@ -6031,7 +5523,6 @@
                         })
                         return
                     }
-
                     // Chrome 60 doesn't support `scrollTo`
                     root.scrollTop = height
                 }
@@ -6045,7 +5536,6 @@
             }
             return new IntersectionObserver((entries) => this._observerCallback(entries), options)
         }
-
         // The logic of selection
         _observerCallback(entries) {
             const targetElement = (entry) => this._targetLinks.get(`#${entry.target.id}`)
@@ -6072,7 +5562,6 @@
                     }
                     continue
                 }
-
                 // if we are scrolling up, pick the smallest offsetTop
                 if (!userScrollsDown && !entryIsLowerThanPrevious) {
                     activate(entry)
@@ -6089,7 +5578,6 @@
                     continue
                 }
                 const observableSection = SelectorEngine.findOne(anchor.hash, this._element)
-
                 // ensure that the observableSection exists & is visible
                 if (isVisible(observableSection)) {
                     this._targetLinks.set(anchor.hash, anchor)
@@ -6132,7 +5620,6 @@
                 node.classList.remove(CLASS_NAME_ACTIVE$1)
             }
         }
-
         // Static
         static jQueryInterface(config) {
             return this.each(function () {
@@ -6147,34 +5634,27 @@
             })
         }
     }
-
     /**
      * Data API implementation
      */
-
     EventHandler.on(window, EVENT_LOAD_DATA_API$1, () => {
         for (const spy of SelectorEngine.find(SELECTOR_DATA_SPY)) {
             ScrollSpy.getOrCreateInstance(spy)
         }
     })
-
     /**
      * jQuery
      */
-
     defineJQueryPlugin(ScrollSpy)
-
     /**
      * --------------------------------------------------------------------------
      * Bootstrap (v5.3.0-alpha1): tab.js
      * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
      * --------------------------------------------------------------------------
      */
-
     /**
      * Constants
      */
-
     const NAME$1 = 'tab'
     const DATA_KEY$1 = 'bs.tab'
     const EVENT_KEY$1 = `.${DATA_KEY$1}`
@@ -6202,11 +5682,9 @@
     const SELECTOR_DATA_TOGGLE = '[data-bs-toggle="tab"], [data-bs-toggle="pill"], [data-bs-toggle="list"]' // todo:v6: could be only `tab`
     const SELECTOR_INNER_ELEM = `${SELECTOR_INNER}, ${SELECTOR_DATA_TOGGLE}`
     const SELECTOR_DATA_TOGGLE_ACTIVE = `.${CLASS_NAME_ACTIVE}[data-bs-toggle="tab"], .${CLASS_NAME_ACTIVE}[data-bs-toggle="pill"], .${CLASS_NAME_ACTIVE}[data-bs-toggle="list"]`
-
     /**
      * Class definition
      */
-
     class Tab extends BaseComponent {
         constructor(element) {
             super(element)
@@ -6216,17 +5694,14 @@
                 // todo: should Throw exception on v6
                 // throw new TypeError(`${element.outerHTML} has not a valid parent ${SELECTOR_INNER_ELEM}`)
             }
-
             // Set up initial aria attributes
             this._setInitialAttributes(this._parent, this._getChildren())
             EventHandler.on(this._element, EVENT_KEYDOWN, (event) => this._keydown(event))
         }
-
         // Getters
         static get NAME() {
             return NAME$1
         }
-
         // Public
         show() {
             // Shows this elem and deactivate the active sibling if exists
@@ -6234,7 +5709,6 @@
             if (this._elemIsActive(innerElem)) {
                 return
             }
-
             // Search for active tab on same parent to deactivate it
             const active = this._getActiveElem()
             const hideEvent = active
@@ -6251,7 +5725,6 @@
             this._deactivate(active, innerElem)
             this._activate(innerElem, active)
         }
-
         // Private
         _activate(element, relatedElem) {
             if (!element) {
@@ -6259,7 +5732,6 @@
             }
             element.classList.add(CLASS_NAME_ACTIVE)
             this._activate(SelectorEngine.getElementFromSelector(element)) // Search and activate/show the proper section
-
             const complete = () => {
                 if (element.getAttribute('role') !== 'tab') {
                     element.classList.add(CLASS_NAME_SHOW$1)
@@ -6281,7 +5753,6 @@
             element.classList.remove(CLASS_NAME_ACTIVE)
             element.blur()
             this._deactivate(SelectorEngine.getElementFromSelector(element)) // Search and deactivate the shown section too
-
             const complete = () => {
                 if (element.getAttribute('role') !== 'tab') {
                     element.classList.remove(CLASS_NAME_SHOW$1)
@@ -6341,7 +5812,6 @@
                 child.setAttribute('tabindex', '-1')
             }
             this._setAttributeIfNotExists(child, 'role', 'tab')
-
             // set attributes to the related panel too
             this._setInitialAttributesOnTargetPanel(child)
         }
@@ -6378,17 +5848,14 @@
         _elemIsActive(elem) {
             return elem.classList.contains(CLASS_NAME_ACTIVE)
         }
-
         // Try to get the inner element (usually the .nav-link)
         _getInnerElement(elem) {
             return elem.matches(SELECTOR_INNER_ELEM) ? elem : SelectorEngine.findOne(SELECTOR_INNER_ELEM, elem)
         }
-
         // Try to get the outer element (usually the .nav-item)
         _getOuterElement(elem) {
             return elem.closest(SELECTOR_OUTER) || elem
         }
-
         // Static
         static jQueryInterface(config) {
             return this.each(function () {
@@ -6403,11 +5870,9 @@
             })
         }
     }
-
     /**
      * Data API implementation
      */
-
     EventHandler.on(document, EVENT_CLICK_DATA_API, SELECTOR_DATA_TOGGLE, function (event) {
         if (['A', 'AREA'].includes(this.tagName)) {
             event.preventDefault()
@@ -6417,7 +5882,6 @@
         }
         Tab.getOrCreateInstance(this).show()
     })
-
     /**
      * Initialize on focus
      */
@@ -6429,20 +5893,16 @@
     /**
      * jQuery
      */
-
     defineJQueryPlugin(Tab)
-
     /**
      * --------------------------------------------------------------------------
      * Bootstrap (v5.3.0-alpha1): toast.js
      * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
      * --------------------------------------------------------------------------
      */
-
     /**
      * Constants
      */
-
     const NAME = 'toast'
     const DATA_KEY = 'bs.toast'
     const EVENT_KEY = `.${DATA_KEY}`
@@ -6468,11 +5928,9 @@
         autohide: true,
         delay: 5000,
     }
-
     /**
      * Class definition
      */
-
     class Toast extends BaseComponent {
         constructor(element, config) {
             super(element, config)
@@ -6481,7 +5939,6 @@
             this._hasKeyboardInteraction = false
             this._setListeners()
         }
-
         // Getters
         static get Default() {
             return Default
@@ -6492,7 +5949,6 @@
         static get NAME() {
             return NAME
         }
-
         // Public
         show() {
             const showEvent = EventHandler.trigger(this._element, EVENT_SHOW)
@@ -6539,9 +5995,7 @@
         isShown() {
             return this._element.classList.contains(CLASS_NAME_SHOW)
         }
-
         // Private
-
         _maybeScheduleHide() {
             if (!this._config.autohide) {
                 return
@@ -6586,7 +6040,6 @@
             clearTimeout(this._timeout)
             this._timeout = null
         }
-
         // Static
         static jQueryInterface(config) {
             return this.each(function () {
@@ -6600,19 +6053,14 @@
             })
         }
     }
-
     /**
      * Data API implementation
      */
-
     enableDismissTrigger(Toast)
-
     /**
      * jQuery
      */
-
     defineJQueryPlugin(Toast)
-
     /**
      * --------------------------------------------------------------------------
      * Bootstrap (v5.3.0-alpha1): index.umd.js
@@ -6633,7 +6081,6 @@
         Toast,
         Tooltip,
     }
-
     return index_umd
 })
 //# sourceMappingURL=bootstrap.bundle.js.map
